@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="descripition" content="Controle de Pedidos de Materiais na CD">
+    <meta name="author" content="Aroni Souza - Site: https://github.com/aronisouza">
+    <link rel="shortcut icon" type="image/x-icon" href="mini.png">
+    <title>Controle de Pedidos de Materiais</title>
+    <link href="css.css" rel="stylesheet">
+    <style>
+        body {margin: 20px;}
+        table { width: 100%;margin-top: 20px;}
+        th, td {text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
+        th {background-color: #f2f2f2;  }
+        .ssmall {font-size: 12px;}
+        small {font-size: 10px;}
+        #alertaSemPedidos {display: none;}
+        #divDataNota {display: none;}
+        .popover-body {white-space: pre-wrap;}
+        .dev {margin-top: 20px; display: flex; justify-content: center; color: rgba(211,211,211,0.10);}
+        .dev strong {font-size: 24px;}
+        .dev small{font-size: 12px;}
+        .thcenter {text-align: center;}
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Controle de Pedidos de Materiais C.P.D</h1>
+    <span class="ssmall">Para ficar mais fácil checar se tem pedido aberto e ficar de olho para ir buscar...</span>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <img title="Logo" src="logo.png" width="10%"/>
+        <div class="col-2 align-items-center">
+         Lista pedidos <a href="#" id="spanvew" onclick="alternarTexto(this)" data-estado="ativos">.</a><!--br/>
+         <small>HOME para alternar</small-->
+        </div>
+        <div class="d-flex">
+          <a class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="toggleTextarea">Informar Pedido</a>
+        </div>
+      </div>
+   </nav>
+
+  <!-- Tabela para exibir os pedidos -->
+    <table id="pedidoTabela" class="table table-striped">
+      
+        <thead>
+            <tr>
+                <!-- th>HOST</th -->
+                <th class="thcenter">Qnt</th>
+                <th>Material</th>
+                <th>Data Pedido / Data Nota</th>
+                <th></th>
+                <th class="thcenter">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- As linhas da tabela serão inseridas aqui pelo JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Elemento para exibir a mensagem de alerta -->
+    <div id="alertaSemPedidos" class="alert alert-warning mt-3" role="alert">
+      Não tem pedido de Material pendente na CD
+    </div>
+
+  </div>
+
+  <!-- Modal Bootstrap -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Adicionar Pedido de Material</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <label for="material" class="form-label">Selecione o Material</label>
+          <select class="form-select" id="material">
+            <option selected disabled>Qual Material...</option>
+            <option value="250759">250759-Etiqueta p/ gondola Amarela</option>
+            <option value="1594035">1594035-Etiqueta p/ gondola Laranja</option>
+            <option value="1737758">1737758-Etiqueta p/ gondola super</option>
+            <option value="448010">448010-Etiqueta p/ têxtil concha</option>
+            <option value="254231">254231-Etiqueta adesiva 2 zebra</option>
+            <option value="422886">422886-Etiqueta térmica p/ balança 60x60x30</option>
+            <option value="324038">324038-Etiqueta térmica p/ balança 60x75x30</option>
+            <option value="1035104">1035104-Etiqueta térmica p/ balança 60x25x30</option>
+            <option value="252344">252344-Ribom p/ impressora zebra</option>
+            <option value="1688787">1688787-Bobina térmica p/ relogio ponto</option>
+            <option value="1779560">1779560-Etiqueta adesiva 40x40 relâmpago</option>
+            <option value="1697903">1697903-Etiqueta adesiva Movimentação Interna 27x25</option>
+            <option value="252425">252425-Papel p/ xerox mod. A4 c/ 500fls</option>
+            <option value="1290436">1290436-Toner compatível HP CE505A</option>
+            <option value="1712496">1712496-Toner compatível HP CF226x PTO</option>
+            <option value="1722842">1722842-Toner compatível HP CE285A PTO</option>
+            <option value="1712447">1712447-Teclado USB PS2</option>
+            <option value="2223063">2223063-Mouse C/FIO MF 100 Usb Compacto</option>
+          </select>
+          <div class="row mt-3">
+            <div class="col mb-3">
+              <label for="datapedido" class="form-label">Data do Pedido</label>
+              <input type="date" class="form-control" id="datapedido">
+            </div>
+            <div class="col mb-3">
+              <label for="qntpedido" class="form-label">Quantidade Pedida</label>
+              <input type="number" class="form-control" id="qntpedido" min="1">
+            </div>
+          </div>
+           <!-- Campo de anotação -->
+          <div class="mb-3" id="divAnotacao">
+            <label for="anotacao" class="form-label">Anotação</label>
+              <textarea class="form-control" id="anotacao" rows="3" placeholder="Adicione uma anotação aqui..."></textarea>
+          </div>
+          <div class="row">
+            <div class="col mt-3">
+              <input class="form-check-input" type="checkbox" value="" id="checkboxNota" onclick="toggleDataNota()">
+              <label class="form-check-label" for="checkboxNota">
+                  Marque se chegou NOTA
+              </label>
+            </div>
+            <div id="divDataNota" class="col mt-3">
+              <label for="dataNota" class="form-label">Data da Nota</label>
+              <input type="date" class="form-control" id="dataNota">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary modalSalvar" onclick="salvarPedido()">...</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmacaoModal" tabindex="-1" aria-labelledby="confirmacaoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmacaoModalLabel">Confirmação de Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que deseja marcar como excluido este pedido?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparFormulario()">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eliminarModalLabel">Você esta certo disso?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Você tem certeza que deseja eliminar definitivamente o pedido?
+        <div class="col m-5">
+          <label for="eliminar" class="form-label">Informe a senha para Continuar!</label>
+          <input type="password" class="form-control" id="eliminar">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparFormulario()">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="eliminarModalBtn">SIM</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="dev"><span><small>DevOps - </small><strong>A</strong>roni <strong>S</strong>ouza</span></div>
+
+  <script src="java.js"></script>
+  <script src="css.js"></script>
+  <script src="excluir-eliminar.js"></script>
+  <script src="exibir-pedido.js"></script>
+  <script src="salvar-pedido.js"></script>
+  <script src="crypto-js.min.js"></script>
+  <script src="sistema.js"></script>
+  <script src="mensagem-de-aletar.js"></script>
+  <script>
+    document.getElementById('toggleTextarea').addEventListener('click', function() {
+        let textarea = document.getElementById('divAnotacao')
+        let modalTitle = document.getElementById('staticBackdrop').querySelector('.modal-title')
+        let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar')
+        textarea.style.display = 'none'
+        modalTitle.textContent = 'Novo Pedido de Material'
+        modalSalvar.textContent = 'Adicionar'
+    });
+  </script>
+  
+</body>
+</html>
