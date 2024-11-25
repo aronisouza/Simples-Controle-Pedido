@@ -41,7 +41,7 @@ function editarPedido(index)
   });
 }
 
-// --- Função para salvar um novo pedido
+// --- Função para salvar edição ou um novo pedido
 function salvarPedido() {
   let materialSelect = document.getElementById('material');
   let material = materialSelect.value;
