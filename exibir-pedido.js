@@ -57,8 +57,8 @@ function exibirPedidos() {
       cellAcoes.style.textAlign = 'center';
       cellAcoes.style.width = '190px';
       if(!mostrandoExcluidos)
-      { //--- Botões de ação (Editar e Excluir)
-      
+      { 
+        //--- Botões de ação (Editar e Excluir)
         let editarButton = document.createElement('button');
         editarButton.className = 'btn btn-outline-primary btn-sm me-2 divAnotacao';
         editarButton.textContent = 'Editar';
@@ -87,10 +87,14 @@ function exibirPedidos() {
         let eliminarButton = document.createElement('button');
         eliminarButton.className = 'btn btn-outline-danger btn-sm';
         eliminarButton.textContent = 'X';
-        eliminarButton.onclick = function () { eliminarPedidosModal(pedido.id); };
-        eliminarButton.disabled=false;
+        eliminarButton.onclick = function () { eliminarPedidosModal(pedido.id, 0); };
         cellAcoes.appendChild(eliminarButton);
-        cellAcoes.appendChild(eliminarButton);
+        
+        let ativarButton = document.createElement('button');
+        ativarButton.className = 'btn btn-success btn-sm ms-2';
+        ativarButton.textContent = 'Reativar';
+        ativarButton.onclick = function () { eliminarPedidosModal(pedido.id, 1); };
+        cellAcoes.appendChild(ativarButton);
       }
       //--- Inicializa o popover (se houver)
       if (pedido.anotacao)

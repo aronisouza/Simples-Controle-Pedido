@@ -23,19 +23,20 @@ document.getElementById('eliminarModalBtn').addEventListener('click', function()
     return;
   }
   let pedidos = carregarPedidos();
-  pedidos = pedidos.filter(pedido=>pedido.id !== eliminarPedidosID);
+  if(eliminarPedidosID[1] === 0) pedidos = pedidos.filter(pedido=>pedido.id !== eliminarPedidosID[0]);
+  else pedidos= pedidos.map(pedido=>{if(pedido.id===eliminarPedidosID[0]) {pedido.excluir="n";} return pedido;});
   salvarPedidos(pedidos);
-  eliminarPedidosID=null;
   exibirPedidos();
   // Fecha o modal de confirmação
   let eliminarModalbb = bootstrap.Modal.getInstance(document.getElementById('eliminarModal'));
   eliminarModalbb.hide();
+  eliminarPedidosID=null;
   alertSuccess();
  });
 
- function eliminarPedidosModal(id)
+ function eliminarPedidosModal(id, tipo)
  {
-  eliminarPedidosID = id;
+  eliminarPedidosID = [id ,tipo];
   let eliminarModalrr = new bootstrap.Modal(document.getElementById('eliminarModal'), {});
   eliminarModalrr.show();
   limparFormulario();

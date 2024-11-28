@@ -48,6 +48,7 @@ function limparFormulario()
   document.getElementById('anotacao').value = '';
   toggleDataNota();
   pedidoEditandoIndex = null;
+  checkboxDiv.style.display = 'none';
 }
 
 //--- Criptografia
@@ -58,7 +59,6 @@ function gerarMD5(texto)
 function alternarTexto(link) {
   //--- Obtém o estado atual do link
   const estadoAtual = link.getAttribute("data-estado");
-
   //--- Alterna entre "ativos" e "excluidos"
   if (estadoAtual === "ativos") {
     link.setAttribute("data-estado", "excluidos");
@@ -69,6 +69,9 @@ function alternarTexto(link) {
   }
   mostrandoExcluidos = !mostrandoExcluidos; exibirPedidos();
 }
+
+let checkboxDiv = document.getElementById('checkboxDiv')
+checkboxDiv.style.display = 'none';
 
 // Carrega e exibe os pedidos ao carregar a página
 window.onload = exibirPedidos;

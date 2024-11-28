@@ -32,8 +32,7 @@
       <div class="container-fluid">
         <img title="Logo" src="logo.png" width="10%"/>
         <div class="col-2 align-items-center">
-         Lista pedidos <a href="#" id="spanvew" onclick="alternarTexto(this)" data-estado="ativos">.</a><!--br/>
-         <small>HOME para alternar</small-->
+         Lista pedidos <a href="#" id="spanvew" onclick="alternarTexto(this)" data-estado="ativos">.</a><!--br/><small>HOME para alternar</small-->
         </div>
         <div class="d-flex">
           <a class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="toggleTextarea">Informar Pedido</a>
@@ -112,7 +111,7 @@
             <label for="anotacao" class="form-label">Anotação</label>
               <textarea class="form-control" id="anotacao" rows="3" placeholder="Adicione uma anotação aqui..."></textarea>
           </div>
-          <div class="row">
+          <div class="row" id="checkboxDiv">
             <div class="col mt-3">
               <input class="form-check-input" type="checkbox" value="" id="checkboxNota" onclick="toggleDataNota()">
               <label class="form-check-label" for="checkboxNota">
@@ -187,12 +186,12 @@
   <script src="mensagem-de-aleta.js"></script>
   <script>
     document.getElementById('toggleTextarea').addEventListener('click', function() {
-        let textarea = document.getElementById('divAnotacao')
-        let modalTitle = document.getElementById('staticBackdrop').querySelector('.modal-title')
-        let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar')
-        textarea.style.display = 'none'
-        modalTitle.textContent = 'Novo Pedido de Material'
-        modalSalvar.textContent = 'Adicionar'
+      let textarea = document.getElementById('divAnotacao')
+      let modalTitle = document.getElementById('staticBackdrop').querySelector('.modal-title')
+      let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar')
+      textarea.style.display = 'none'
+      modalTitle.textContent = 'Novo Pedido de Material'
+      modalSalvar.textContent = 'Adicionar'
     });
   </script>
   

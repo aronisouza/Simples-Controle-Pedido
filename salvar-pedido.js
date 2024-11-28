@@ -1,20 +1,19 @@
-
 //--- Salvar pedidos no Local Storage
 function salvarPedidos(pedidos)
 {localStorage.setItem('pedidos', JSON.stringify(pedidos));}
 
 // --- Função para carregar um pedido no modal para edição
 function editarPedido(index)
-{
+{ 
+  checkboxDiv.style.display = 'block';
   let pedidos = carregarPedidos();
-
   let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar');
   modalSalvar.textContent = 'Salvar';
-
   pedidos= pedidos.map(pedido=>
   {
     if(pedido.id===index)
     {
+
       // Preencher os campos do modal com os dados do pedido
       document.getElementById('material').value = pedido.material;
       document.getElementById('datapedido').value = pedido.dataPedido.split(' / ')[0];
