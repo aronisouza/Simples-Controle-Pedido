@@ -60,22 +60,24 @@ function exibirPedidos() {
       { 
         //--- Botões de ação (Editar e Excluir)
         let editarButton = document.createElement('button');
-        editarButton.className = 'btn btn-outline-primary btn-sm me-2 divAnotacao';
+        editarButton.className = 'btn btn-primary btn-sm me-2 divAnotacao';
         editarButton.textContent = 'Editar';
-        editarButton.onclick = function () {
+        editarButton.onclick = function ()
+        {
           let modalTitle = document.getElementById('staticBackdrop').querySelector('.modal-title')
           let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar')
           let textarea = document.getElementById('divAnotacao');
           textarea.style.display = 'block';
           modalTitle.textContent = 'Editando Pedido de Material';
           modalSalvar.textContent = 'Salvar';
-          editarPedido(pedido.id); 
+          min = pedido.dataPedido.split(' / ')[0];
+          editarPedido(pedido.id, min); 
         };
         editarButton.disabled=false;
         //--- Botão excluir
         let excluirButton = document.createElement('button');
         excluirButton.onclick = function () { excluirPedido(pedido.id); };
-        excluirButton.className = 'btn btn-outline-danger btn-sm';
+        excluirButton.className = 'btn btn-warning btn-sm';
         excluirButton.textContent = 'Excluir';
         excluirButton.disabled=false;
         cellAcoes.appendChild(editarButton);
@@ -85,15 +87,15 @@ function exibirPedidos() {
       {
         //--- Botão Eliminar
         let eliminarButton = document.createElement('button');
-        eliminarButton.className = 'btn btn-outline-danger btn-sm';
+        eliminarButton.className = 'btn btn-danger btn-sm';
         eliminarButton.textContent = 'X';
-        eliminarButton.onclick = function () { eliminarPedidosModal(pedido.id, 0); };
+        eliminarButton.onclick = function () { eliminarPedidosModal(pedido.id, 0, 'Você tem certeza que deseja ELIMINAR Definitivamente o pedido?'); };
         cellAcoes.appendChild(eliminarButton);
-        
+        //--- Botão Reativar
         let ativarButton = document.createElement('button');
-        ativarButton.className = 'btn btn-success btn-sm ms-2';
-        ativarButton.textContent = 'Reativar';
-        ativarButton.onclick = function () { eliminarPedidosModal(pedido.id, 1); };
+        ativarButton.className = 'btn btn-info btn-sm ms-2';
+        ativarButton.textContent = 'ReAtivar';
+        ativarButton.onclick = function () { eliminarPedidosModal(pedido.id, 1, 'Ao confirmar você vai ATIVAR o pedido Novamente!'); };
         cellAcoes.appendChild(ativarButton);
       }
       //--- Inicializa o popover (se houver)

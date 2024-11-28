@@ -145,7 +145,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparFormulario()">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+        <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">SIM</button>
       </div>
     </div>
   </div>
@@ -160,15 +160,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Você tem certeza que deseja eliminar definitivamente o pedido?
-        <div class="col m-5">
+        <div class="row mt-5 d-flex justify-content-center" id="spanConfirmModal"></div>
+        <div class="row m-5">
           <label for="eliminar" class="form-label">Informe a senha para Continuar!</label>
           <input type="password" class="form-control" id="eliminar">
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limparFormulario()">Cancelar</button>
-        <button type="button" class="btn btn-danger" id="eliminarModalBtn">SIM</button>
+        <button type="button" class="" id="eliminarModalBtn">SIM</button>
       </div>
     </div>
   </div>

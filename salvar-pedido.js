@@ -3,8 +3,9 @@ function salvarPedidos(pedidos)
 {localStorage.setItem('pedidos', JSON.stringify(pedidos));}
 
 // --- Função para carregar um pedido no modal para edição
-function editarPedido(index)
+function editarPedido(index , min='')
 { 
+  document.getElementById('dataNota').min = min;
   checkboxDiv.style.display = 'block';
   let pedidos = carregarPedidos();
   let modalSalvar = document.getElementById('staticBackdrop').querySelector('.modalSalvar');
@@ -13,7 +14,6 @@ function editarPedido(index)
   {
     if(pedido.id===index)
     {
-
       // Preencher os campos do modal com os dados do pedido
       document.getElementById('material').value = pedido.material;
       document.getElementById('datapedido').value = pedido.dataPedido.split(' / ')[0];
@@ -41,7 +41,8 @@ function editarPedido(index)
 }
 
 // --- Função para salvar edição ou um novo pedido
-function salvarPedido() {
+function salvarPedido()
+{
   let materialSelect = document.getElementById('material');
   let material = materialSelect.value;
   let descricao = materialSelect.options[materialSelect.selectedIndex].text;
@@ -58,7 +59,8 @@ function salvarPedido() {
   // Validação: Quantidade não pode ser menor que 1
   if (quantidade < 1 || isNaN(quantidade)) {alertaPersonalizado('Por favor, insira uma quantidade válida (maior que 0).','info');return;}
   // Se o checkbox da nota estiver marcado, adiciona a data da nota ao pedido
-  if (checkboxNota.checked) {
+  if (checkboxNota.checked)
+  {
     if (!dataNota) {alertaPersonalizado('Por favor, insira uma data válida para a chegada de nota.','info');return;}
     // Adiciona a data da nota ao lado da data do pedido
     dataPedido += ' / ' + dataNota; 

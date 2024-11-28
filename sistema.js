@@ -52,7 +52,7 @@ function limparFormulario()
 }
 
 //--- Criptografia
-function gerarMD5(texto)
+function gerar(texto)
 {return CryptoJS.MD5(texto).toString();}
 
 //--- Mesma funcionalidade da techa HOME

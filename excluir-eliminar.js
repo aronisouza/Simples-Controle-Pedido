@@ -16,7 +16,7 @@ document.getElementById('confirmarExclusaoBtn').addEventListener('click', functi
 document.getElementById('eliminarModalBtn').addEventListener('click', function()
 {
   let texto = document.getElementById('eliminar');
-  const hash = gerarMD5(texto.value);
+  const hash = gerar(texto.value);
   if(hash !== "d66be74607aa68458d2687eaa3388e71")
   {
     alertaSenhaIncorreta();
@@ -34,10 +34,16 @@ document.getElementById('eliminarModalBtn').addEventListener('click', function()
   alertSuccess();
  });
 
- function eliminarPedidosModal(id, tipo)
+ function eliminarPedidosModal(id, tipo, msg)
  {
   eliminarPedidosID = [id ,tipo];
   let eliminarModalrr = new bootstrap.Modal(document.getElementById('eliminarModal'), {});
+  let eliminarPedidosMSG = document.getElementById('spanConfirmModal');
+  let eliminarModalBtn = document.getElementById('eliminarModalBtn');
+  eliminarModalBtn.textContent= tipo===0?'Excluir':'Ativar';
+  eliminarModalBtn.className = tipo===1?'btn btn-success':'btn btn-danger';
+  eliminarPedidosMSG.textContent=msg;
+  eliminarPedidosMSG.style.textAlign = 'center';
   eliminarModalrr.show();
   limparFormulario();
  }
